@@ -1,0 +1,40 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+name: Node.js Package
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  AWS_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+  ENV_PROD: ${{ secrets.ENV_PROD }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: create .env.prod
+        run: echo "$ENV_PROD" > env.prod
+      
+      - name: run npm install
+        run: npm install
+
+      - name: build vue
+        run: npm run build --mode prod
+        
+      - name: Configure AWS Credentials Action for GitHub Actions
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ap-northeast-2
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 dist s3://$AWS_BUCKET_NAME
