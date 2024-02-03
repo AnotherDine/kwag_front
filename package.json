@@ -1,0 +1,20 @@
+{
+  "name": "front_kwag",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "prod": "vite --mode prod",
+    "build": "vite build --mode prod",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "axios": "^1.6.7",
+    "vue": "^3.3.11"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.5.2",
+    "vite": "^5.0.8"
+  }
+}
