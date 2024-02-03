@@ -23,7 +23,6 @@ export default {
   },
   methods : {
     doAxios : function() {
-      alert(import.meta.env.VITE_API_BASE_URL);
       this.$defaultAxios.get("/")
       .then(res => {
         this.responseData = res.data;
