@@ -27,7 +27,7 @@ jobs:
         run: npm install
 
       - name: build vue
-        run: npm run build --mode prod
+        run: npm run build --mode prod --base /
         
       - name: Configure AWS Credentials Action for GitHub Actions
         uses: aws-actions/configure-aws-credentials@v4
